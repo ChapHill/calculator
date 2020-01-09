@@ -17,8 +17,6 @@ function inputDecimal(deci){
   calculator.displayValue += deci;
 }
 
-
-
 function updateDisplay(){
   const display = document.querySelector("#display");
   if(display.innerHTML.length >= 30){
@@ -27,6 +25,17 @@ function updateDisplay(){
   display.innerText = calculator.displayValue;
 
 }
+
+ function allClear() {
+   calculator.displayValue = '0';
+   calculator.firstOperand = null;
+   calculator.secondOperand = false;
+   calculator.operator = null;
+ }
+
+ function operation(operator) {
+   
+ }
 
 
 
@@ -39,7 +48,8 @@ keys.addEventListener('click', e => {
     return;
   }
   if(target.classList.contains('operator')){
-    console.log('operator', target.innerHTML);
+    operation(target.innerHTML);
+    updateDisplay();
     return;
   }
   if(target.classList.contains('decimal')){
@@ -48,7 +58,8 @@ keys.addEventListener('click', e => {
     return;
   }
   if(target.classList.contains('clear')){
-    console.log('clear', target.innerHTML);
+    allClear();
+    updateDisplay();
     return;
   }
 
