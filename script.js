@@ -70,8 +70,6 @@ function updateDisplay(){
    }
    calculator.secondOperand = true;
    calculator.operator = operator;
-
-
  }
 
 

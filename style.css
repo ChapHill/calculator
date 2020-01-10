@@ -1,3 +1,11 @@
+body {
+  background: url("img/mathBackground.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 #container {
   margin: 0 auto;
   margin-top: 100px;
@@ -9,7 +17,8 @@
   background-color: #2f76d4;
   grid-gap: 25px;
   border-style: solid;
-  border-color: black;
+  border-color: white;
+  border-width: thick;
 }
 
 .item {
@@ -31,7 +40,7 @@
   grid-column: 1 / 5;
   height: 80px;
   width: 385px;
-  border-radius: 21px 21px 0px 0px;
+  border-radius: 19px 19px 0px 0px;
   text-align: right;
   border-style: none;
   border-color: none;
