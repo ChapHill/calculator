@@ -7,11 +7,23 @@ const calculator = {
 
 function inputNums(num){
   const {displayValue} = calculator;
-  calculator.displayValue = displayValue == '0' ? num : displayValue + num;
+
+  if(calculator.secondOperand == true){
+    calculator.displayValue = num;
+    calculator.secondOperand = false;
+  } else {
+    if(displayValue == '0'){
+      calculator.displayValue = num;
+    } else {
+      calculator.displayValue = displayValue + num;
+    }
+  }
 }
 
 function inputDecimal(deci){
-  if(calculator.displayValue.includes('.')){
+  if(calculator.secondOperand == true){
+    return;
+  }else if(calculator.displayValue.includes('.')){
     return;
   }
   calculator.displayValue += deci;
@@ -34,7 +46,32 @@ function updateDisplay(){
  }
 
  function operation(operator) {
-   
+   const value = parseFloat(calculator.displayValue);
+
+   if(calculator.operator && calculator.secondOperand){
+      calculator.operator = operator;
+      return;
+   }
+
+   if(operator == '+/-'){
+     return calculator.displayValue *= -1;
+   }
+
+   if(operator == '%'){
+     return calculator.displayValue *= .01;
+   }
+
+   if(calculator.firstOperand == null){
+     calculator.firstOperand = value;
+   } else if(operator){
+     const result = operate(operator, calculator.firstOperand, value);
+     calculator.displayValue = result.toString();
+     calculator.firstOperand = result;
+   }
+   calculator.secondOperand = true;
+   calculator.operator = operator;
+
+
  }
 
 
@@ -72,7 +109,6 @@ const add = (a, b) => a+b;
 const multiply = (a, b) => a*b;
 const subtract = (a, b) => a-b;
 const divide = (a, b) => a/b;
-const plusMinus = (a) => a *= -1;
 
 function operate(operator, a, b){
   switch(operator){
@@ -82,14 +118,22 @@ function operate(operator, a, b){
     case '-':
       return subtract(a, b);
       break;
-    case '*':
+    case 'X':
       return multiply(a, b);
       break;
     case '/':
       return divide(a, b);
       break;
-    case '+/-':
-      return plusMinus(a);
+    case '=':
+      if(calculator.operator == '+'){
+        return add(a, b);
+      } else if(calculator.operator == '-'){
+        return subtract(a, b);
+      } else if(calculator.operator == 'X'){
+        return multiply(a, b);
+      } else if(calculator.operator == '/') {
+        return divide(a, b);
+      }
       break;
     default:
       return "enter valid operator";
